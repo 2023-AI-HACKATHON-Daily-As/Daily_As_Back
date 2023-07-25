@@ -15,8 +15,11 @@ export class Users extends Document {
   @Prop({ required: true, unique: false })
   social_type: string;
 
-  @Prop({ required: true, enum: ['ADMIN', 'USER'] })
-  role: string;
+  // @Prop({ required: true, enum: ['ADMIN', 'USER'] })
+  // role: string;
+
+  @Prop({ required: false, unique: false })
+  disabled: boolean;
 
   @Prop({ default: Date.now })
   createdAt: Date;
