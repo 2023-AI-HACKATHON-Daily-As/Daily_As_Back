@@ -1,9 +1,15 @@
 import { Injectable } from '@nestjs/common';
 import { CreateChallengeDto } from './dto/create-challenge.dto';
 import { UpdateChallengeDto } from './dto/update-challenge.dto';
+import { InjectModel } from '@nestjs/mongoose';
+import { Challenges } from './schemas/challenge.schema';
+import { Model } from 'mongoose';
 
 @Injectable()
 export class ChallengesService {
+  constructor(
+    @InjectModel(Challenges.name) private usersModel: Model<Challenges>,
+  ) {}
   create(createChallengeDto: CreateChallengeDto) {
     return 'This action adds a new challenge';
   }
