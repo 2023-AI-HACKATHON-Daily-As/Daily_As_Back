@@ -3,8 +3,8 @@ import { Document } from 'mongoose';
 
 @Schema()
 export class Tasks extends Document {
-  @Prop({ required: true, unique: true })
-  user_id: string;
+  // @Prop({ required: true, unique: true })
+  // user_id: string;
 
   @Prop({ required: true, unique: false })
   task: string;
@@ -12,8 +12,8 @@ export class Tasks extends Document {
   @Prop({ required: true, unique: false })
   description: string;
 
-  @Prop({ required: false, unique: false })
-  sub_task: string;
+  @Prop({ type: [String], required: false, unique: false })
+  sub_task: string[];
 
   @Prop({ required: true, unique: false })
   date: Date;
