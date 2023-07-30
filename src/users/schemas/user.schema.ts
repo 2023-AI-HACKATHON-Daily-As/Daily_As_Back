@@ -13,10 +13,7 @@ export class Users extends Document {
   nickname: string;
 
   @Prop({ required: true, unique: false })
-  social_type: string;
-
-  // @Prop({ required: true, enum: ['ADMIN', 'USER'] })
-  // role: string;
+  provider: string;
 
   @Prop({ required: false, unique: false })
   disabled: boolean;
