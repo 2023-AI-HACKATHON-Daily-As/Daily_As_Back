@@ -8,27 +8,37 @@ export class ChallengesController {
   constructor(private readonly challengesService: ChallengesService) {}
 
   @Post()
-  create(@Body() createChallengeDto: CreateChallengeDto) {
-    return this.challengesService.create(createChallengeDto);
-  }
-
-  @Get()
-  findAll() {
-    return this.challengesService.findAll();
-  }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.challengesService.findOne(+id);
+  async create(@Body() createChallengeDto: CreateChallengeDto) {
+    return await this.challengesService.create(createChallengeDto);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateChallengeDto: UpdateChallengeDto) {
-    return this.challengesService.update(+id, updateChallengeDto);
+  async update(@Param('id') id: string, @Body() updateChallengeDto: UpdateChallengeDto) {
+    await this.challengesService.update(id, updateChallengeDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.challengesService.remove(+id);
+  async remove(@Param('id') id: string) {
+    await this.challengesService.remove(id);
+  }
+
+  @Patch('/close/:id')
+  async updateClosed(@Param('id') id: string, @Body('isClosed') isClosed: boolean) {
+    await this.challengesService.updateClosed(id, isClosed);
+  }
+
+  @Patch('/private/:id')
+  async updatePrivate(@Param('id') id: string, @Body('isPrivate') isPrivate: boolean) {
+    await this.challengesService.updatePrivate(id, isPrivate)
+  }
+
+  @Patch('/join/:id')
+  async joinChallenge(@Param('id') id: string, @Body('user') user: string) {
+    await this.challengesService.joinChallenge(id, user)
+  }
+
+  @Patch('/unjoin/:id')
+  async unJoinChallenge(@Param('id') id: string, @Body('user') user: string) {
+    await this.challengesService.unJoinChallenge(id, user);
   }
 }
