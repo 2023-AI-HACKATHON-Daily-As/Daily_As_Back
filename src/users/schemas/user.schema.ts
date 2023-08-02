@@ -9,14 +9,11 @@ export class Users extends Document {
   @Prop({ required: true, unique: true })
   password: string;
 
-  @Prop({ required: true, unique: true })
+  @Prop({ required: false, unique: true })
   nickname: string;
 
   @Prop({ required: true, unique: false })
-  social_type: string;
-
-  // @Prop({ required: true, enum: ['ADMIN', 'USER'] })
-  // role: string;
+  provider: string;
 
   @Prop({ required: false, unique: false })
   disabled: boolean;
