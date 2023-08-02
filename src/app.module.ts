@@ -7,6 +7,7 @@ import { TasksModule } from './tasks/tasks.module';
 import { ChallengesModule } from './challenges/challenges.module';
 import { ConfigModule } from '@nestjs/config';
 import configuration from './config/configuration';
+import { UploadModule } from './uploads/upload.module';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import configuration from './config/configuration';
     UsersModule,
     TasksModule,
     ChallengesModule,
+    UploadModule
   ],
   controllers: [AppController],
   providers: [AppService],

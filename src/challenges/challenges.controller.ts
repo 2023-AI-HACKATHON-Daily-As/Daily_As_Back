@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
 import { ChallengesService } from './challenges.service';
 import { CreateChallengeDto } from './dto/create-challenge.dto';
 import { UpdateChallengeDto } from './dto/update-challenge.dto';
@@ -10,6 +10,16 @@ export class ChallengesController {
   @Post()
   async create(@Body() createChallengeDto: CreateChallengeDto) {
     return await this.challengesService.create(createChallengeDto);
+  }
+
+  @Get(':id')
+  async readChalleng(@Param('id') id: string) {
+    return await this.challengesService.readChalleng(id);
+  }
+
+  @Get()
+  async readChallengs(@Query('page') page: number, @Query('limit') limit: number) {
+    return await this.challengesService.readChallengs(page, limit);
   }
 
   @Patch(':id')

@@ -1,0 +1,60 @@
+require('dotenv').config();
+
+import { BadRequestException } from '@nestjs/common';
+import { existsSync, mkdirSync, unlinkSync } from 'fs';
+import { diskStorage } from 'multer';
+import uuidRandom from './uuidRandom';
+
+export const multerOptions = {
+  fileFilter: (_request, file, callback) => {
+    if (file.mimetype.match(/\/(jpg|jpeg|png|gif)$/)) {
+      callback(null, true);
+    } else {
+      throw new BadRequestException(
+        '지원하지 않는 형식의 파일입니다. (jpg, jpeg, png, gif 만 허용)',
+      );
+    }
+  },
+
+  storage: diskStorage({
+    destination: (_request, _file, callback) => {
+      const uploadPath: string = getUploadPath();
+
+      callback(null, uploadPath);
+    },
+
+    filename: (request, file, callback) => {
+      callback(null, uuidRandom(file));
+    },
+  }),
+};
+
+export const getUploadPath = () => {
+  const uploadPath: string = './src/assets';
+
+  if (!existsSync(uploadPath)) {
+    // public 폴더가 존재하지 않을시, 생성합니다.
+    mkdirSync(uploadPath);
+  }
+  return uploadPath;
+};
+
+const createImageURL = (file): string => {
+  return `${file.filename}`;
+};
+
+export const getImageURL = (files: File[]) => {
+  const generatedFiles: string[] = [];
+
+  for (const file of files) {
+    generatedFiles.push(createImageURL(file));
+  }
+
+  return generatedFiles;
+};
+
+export const deleteImageFile = file_name => {
+  if (existsSync('./src/assets/' + file_name)) {
+    unlinkSync('./src/assets/' + file_name);
+  }
+};

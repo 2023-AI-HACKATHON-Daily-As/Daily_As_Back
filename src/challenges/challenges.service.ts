@@ -33,6 +33,7 @@ export class ChallengesService {
     @InjectModel(Challenges.name) private challengesModel: Model<Challenges>,
   ) {}
 
+  // 챌린지 생성
   async create(createChallengeDto: CreateChallengeDto) {
     const insertChallenge = {
         host: 'sdsdsss',
@@ -44,6 +45,7 @@ export class ChallengesService {
     return challenge;
   }
 
+  // 챌린지 수정
   async update(id: string, updateChallengeDto: UpdateChallengeDto) {
     const _id = new Types.ObjectId(id);
 
@@ -59,6 +61,7 @@ export class ChallengesService {
     );
   }
 
+  // 챌린지 삭제
   async remove(id: string) {
     const _id = new Types.ObjectId(id);
 
@@ -68,6 +71,7 @@ export class ChallengesService {
     );
   }
 
+  // 챌린지 공개 여부
   async updatePrivate(id: string, isPrivate: boolean) {
     const _id = new Types.ObjectId(id);
 
@@ -77,6 +81,7 @@ export class ChallengesService {
     );
   }
 
+  // 챌린지 마감 여부
   async updateClosed(id: string, isClosed: boolean) {
     const _id = new Types.ObjectId(id);
 
@@ -86,6 +91,7 @@ export class ChallengesService {
     );
   }
 
+  // 챌린지 참가
   async joinChallenge(id: string, userId: string) {
     const _id = new Types.ObjectId(id);
     const challenge = await this.challengesModel.findOne({_id});
@@ -122,6 +128,7 @@ export class ChallengesService {
     }
   }
 
+  // 챌린지 참가 취소
   async unJoinChallenge(id: string, userId: string) {
     const _id = new Types.ObjectId(id);
     const challenge = await this.challengesModel.findOne({_id});
@@ -144,5 +151,20 @@ export class ChallengesService {
       { _id },
       { $set: { members, isClosed } }
     );
+  }
+
+  // 챌린지 상세 페이지 조회
+  async readChalleng(id: string) {
+    const _id = new Types.ObjectId(id);
+    const challenge = await this.challengesModel.findOne({_id});
+
+    return challenge;
+  }
+
+  // 챌린지 목록 조회
+  async readChallengs(page: number, limit: number) {
+    const challenges = await this.challengesModel.find().skip(page).limit(limit);
+
+    return challenges;
   }
 }

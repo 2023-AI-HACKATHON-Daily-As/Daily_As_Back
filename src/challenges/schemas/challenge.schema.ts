@@ -12,7 +12,7 @@ export class Challenges extends Document {
   @Prop({ type: Number })
   memberNum: number;
 
-  @Prop({ required: true, unique: true })
+  @Prop({ required: true })
   title: string;
 
   @Prop({ type: String })
