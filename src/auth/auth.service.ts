@@ -14,7 +14,6 @@ export class AuthService {
   ) {}
 
   async tokenValidateUser(payload) {
-    console.log('ddddddd', payload.user);
     const user = await this.usersModel.find(payload.user.email);
     return user;
   }

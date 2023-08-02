@@ -11,6 +11,7 @@ import {
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/users.dto';
 import { JwtAuthGuard } from 'src/auth/jwt/jwt.auth.guard';
+import { GetUser } from 'src/custom-decorator/get-user.decorator';
 
 @Controller('users')
 export class UsersController {
@@ -18,7 +19,8 @@ export class UsersController {
 
   @Get()
   @UseGuards(JwtAuthGuard)
-  create(@Body() createUserDto: CreateUserDto) {
-    return this.usersService.create(createUserDto);
+  create(@GetUser() user) {
+    console.log('TEST', user);
+    return this.usersService.create(user);
   }
 }
