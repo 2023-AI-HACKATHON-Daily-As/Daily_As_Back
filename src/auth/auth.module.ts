@@ -10,9 +10,13 @@ import { KakaoStrategy } from './kakao/kakao.strategy';
 import { KakaoAuthGuard } from './kakao/kakao.auth.guard';
 import { JwtStrategy } from './jwt/jwt.strategy';
 import { JwtAuthGuard } from './jwt/jwt.auth.guard';
+import { MongooseModule } from '@nestjs/mongoose';
+import { UsersSchema } from 'src/users/schemas/user.schema';
+import { GoogleStrategy } from './google/google.strategy';
 
 @Module({
   imports: [
+    MongooseModule.forFeature([{ name: 'Users', schema: UsersSchema }]),
     PassportModule,
     HttpModule,
     JwtModule.registerAsync({
@@ -28,6 +32,8 @@ import { JwtAuthGuard } from './jwt/jwt.auth.guard';
   controllers: [AuthController],
   providers: [
     KakaoStrategy,
+    KakaoAuthGuard,
+    GoogleStrategy,
     KakaoAuthGuard,
     JwtStrategy,
     JwtAuthGuard,

@@ -9,7 +9,7 @@ export class Users extends Document {
   @Prop({ required: true, unique: true })
   password: string;
 
-  @Prop({ required: true, unique: true })
+  @Prop({ required: false, unique: true })
   nickname: string;
 
   @Prop({ required: true, unique: false })

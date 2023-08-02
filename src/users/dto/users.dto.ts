@@ -5,8 +5,6 @@ export class UserDto {
 
   public accessToken: string;
 
-  public refreshToken: string;
-
   public nickname: string;
 
   public provider: string;
