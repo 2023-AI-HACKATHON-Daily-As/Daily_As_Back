@@ -38,3 +38,5 @@ lerna-debug.log*
 .env
 /src/config/development.yaml
 /src/config/production.yaml
+
+src/assets

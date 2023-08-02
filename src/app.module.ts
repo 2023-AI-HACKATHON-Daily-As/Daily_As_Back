@@ -8,6 +8,7 @@ import { ChallengesModule } from './challenges/challenges.module';
 import { ConfigModule } from '@nestjs/config';
 import { AuthModule } from './auth/auth.module';
 import configuration from './config/configuration';
+import { UploadModule } from './uploads/upload.module';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import configuration from './config/configuration';
     TasksModule,
     ChallengesModule,
     AuthModule,
+    UploadModule
   ],
   controllers: [AppController],
   providers: [AppService],
