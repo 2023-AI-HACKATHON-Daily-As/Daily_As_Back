@@ -17,16 +17,8 @@ import { UploadModule } from './uploads/upload.module';
     UsersModule,
     TasksModule,
     ChallengesModule,
-<<<<<<< Updated upstream
-    AuthModule,
-    UploadModule
-=======
-<<<<<<< Updated upstream
-=======
     AuthModule,
     UploadModule,
->>>>>>> Stashed changes
->>>>>>> Stashed changes
   ],
   controllers: [AppController],
   providers: [AppService],
