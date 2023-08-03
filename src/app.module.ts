@@ -12,13 +12,21 @@ import { UploadModule } from './uploads/upload.module';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({ load: [configuration], isGlobal: true }),
+    ConfigModule.forRoot({ envFilePath: '.env', isGlobal: true }),
     MongooseModule.forRoot('mongodb://localhost/nest'),
     UsersModule,
     TasksModule,
     ChallengesModule,
+<<<<<<< Updated upstream
     AuthModule,
     UploadModule
+=======
+<<<<<<< Updated upstream
+=======
+    AuthModule,
+    UploadModule,
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
   ],
   controllers: [AppController],
   providers: [AppService],
