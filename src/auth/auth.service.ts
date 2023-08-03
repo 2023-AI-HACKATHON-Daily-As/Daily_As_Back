@@ -43,7 +43,7 @@ export class AuthService {
     }
   }
 
-  /* Kako Login */
+  /* Kakao Login */
   async kakaoLogin(req): Promise<any> {
     try {
       const { email, password } = req;
@@ -60,6 +60,7 @@ export class AuthService {
       }
       return await this.login(user);
     } catch (error) {
+      console.log(error);
       return {
         statusCode: 500,
         error: '카카오 로그인 인증을 실패 하였습니다.',
