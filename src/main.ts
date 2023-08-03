@@ -8,7 +8,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   const configService = app.get(ConfigService);
-  const port = configService.get('server.port');
+  const port = configService.get('PORT');
   const swaggerConfig = new DocumentBuilder()
     .setTitle(`Daily As Doc's`)
     .setDescription('Daily As API description')
