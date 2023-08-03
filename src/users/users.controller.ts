@@ -12,15 +12,24 @@ import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/users.dto';
 import { JwtAuthGuard } from 'src/auth/jwt/jwt.auth.guard';
 import { GetUser } from 'src/custom-decorator/get-user.decorator';
+import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 
-@Controller('users')
+@Controller('user')
+@ApiTags('User')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
-  @Get()
+  @Post('/update/nickname')
   @UseGuards(JwtAuthGuard)
-  create(@GetUser() user) {
-    console.log('TEST', user);
-    return this.usersService.create(user);
+  @ApiOperation({
+    summary: '닉네임 설정 현재 작업중..',
+  })
+  // @ApiResponse({
+  //   status: 200,
+  //   description: 'Success',
+  //   // type: getAuthResDto,
+  // })
+  create(@GetUser() user, @Body() ninkname: string) {
+    return this.usersService.updateNickname(user, ninkname);
   }
 }
