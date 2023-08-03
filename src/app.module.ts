@@ -13,7 +13,7 @@ import { UploadModule } from './uploads/upload.module';
 @Module({
   imports: [
     ConfigModule.forRoot({ envFilePath: '.env', isGlobal: true }),
-    MongooseModule.forRoot('mongodb://127.0.0.1:27017/nest'),
+    MongooseModule.forRoot('mongodb://svc.sel4.cloudtype.app:30495/nest'),
     UsersModule,
     TasksModule,
     ChallengesModule,
