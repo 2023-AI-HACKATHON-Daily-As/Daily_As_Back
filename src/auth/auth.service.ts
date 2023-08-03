@@ -8,14 +8,16 @@ import { InjectModel } from '@nestjs/mongoose';
 @Injectable()
 export class AuthService {
   constructor(
-    private jwtService: JwtService,
+    private readonly jwtService: JwtService,
     private readonly configService: ConfigService,
     @InjectModel('Users') private usersModel: Model<Users>,
   ) {}
 
   async tokenValidateUser(payload) {
-    console.log('ddddddd', payload.user);
-    const user = await this.usersModel.find(payload.user.email);
+    const user = await this.usersModel.findOne({
+      email: payload.email,
+      password: payload.password,
+    });
     return user;
   }
 
@@ -33,12 +35,11 @@ export class AuthService {
           password,
           provider: 'google',
         });
-        return await this.login(user);
       }
-      return user;
+      return await this.login(user);
     } catch (error) {
       console.log(error);
-      return { ok: false, error: '구글 로그인 인증을 실패 하였습니다.' };
+      return { statusCode: 500, error: '구글 로그인 인증을 실패 하였습니다.' };
     }
   }
 
@@ -56,24 +57,29 @@ export class AuthService {
           password,
           provider: 'kakao',
         });
-        return await this.login(user);
       }
-      return user;
+      return await this.login(user);
     } catch (error) {
-      return { ok: false, error: '카카오 로그인 인증을 실패 하였습니다.' };
+      return {
+        statusCode: 500,
+        error: '카카오 로그인 인증을 실패 하였습니다.',
+      };
     }
   }
 
   async login(user: any) {
     const payload = {
-      id: user.email,
+      email: user.email,
+      password: user.password,
     };
+    const token = this.jwtService.sign(payload, {
+      secret: this.configService.get('JWT_SECRET_KEY'),
+    });
+
     return {
-      token: this.jwtService.sign(
-        { user: payload },
-        this.configService.get('JWT_SECRET_KEY'),
-      ),
-      id: user.email,
+      statusCode: 200,
+      userId: user.email,
+      accessToken: token,
     };
   }
 }

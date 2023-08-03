@@ -10,14 +10,13 @@ import { Model } from 'mongoose';
 
 @Injectable()
 export class UsersService {
-  // constructor(@InjectModel(Users.name) private usersModel: Model<Users>) {}
+  constructor(@InjectModel(Users.name) private usersModel: Model<Users>) {}
 
-  async create(createUserDto: CreateUserDto): Promise<any> {
-    // const createdUser = new this.usersModel(createUserDto);
-    // return createdUser.save();
-  }
-
-  async findOne(email, provider): Promise<any> {
-    // return this.usersModel.findOne({ email, provider }).exec();
+  async updateNickname(user: any, nickname: string) {
+    const findUser = await this.usersModel.find(user._id);
+    console.log(findUser);
+    // findUser.nickname = nickname;
+    // await findUser.save();
+    return findUser;
   }
 }
