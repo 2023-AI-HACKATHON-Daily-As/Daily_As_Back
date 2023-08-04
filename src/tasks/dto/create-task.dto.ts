@@ -1,39 +1,14 @@
-import { IsString, IsBoolean, IsArray, IsNotEmpty, IsDateString } from 'class-validator';
+import { IsDate, IsArray, ValidateNested, IsBoolean } from 'class-validator';
+import { CreateMemoDto } from './create-memo.dto';
 
 export class CreateTaskDto {
-    // @IsString()
-    // @IsNotEmpty()
-    // user_id: string;
+  @IsDate()
+  date: Date;
 
-    @IsString()
-    @IsNotEmpty()
-    task: string;
+  @IsArray()
+  @ValidateNested({ each: true })
+  subMemo: CreateMemoDto[];
 
-    @IsString()
-    description: string;
-
-    @IsArray()
-    @IsString({ each: true })
-    @IsNotEmpty()
-    sub_task: string[];
-
-    @IsDateString()
-    @IsNotEmpty()
-    date: Date;
-
-    @IsDateString()
-    @IsNotEmpty()
-    deadline: Date;
-    
-    @IsBoolean()
-    @IsNotEmpty()
-    completed: boolean;
-
-    @IsBoolean()
-    @IsNotEmpty()
-    disabled: boolean;
-
-    @IsDateString()
-    @IsNotEmpty()
-    createdAt: Date;
+  @IsBoolean()
+  isCompleted: boolean;
 }

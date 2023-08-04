@@ -9,36 +9,31 @@ export class TasksController {
 
   @Post()
   async create(@Body() createTaskDto: CreateTaskDto) {
-    return await this.tasksService.create(createTaskDto);
+    return await this.tasksService.createTask(createTaskDto);
   }
 
   @Get()
-  async findAll() {
-    return this.tasksService.findAll();
+  async findAllTask() {
+    return this.tasksService.findAllTask();
   }
 
   @Get(':id')
-  async findOne(@Param('id') id: string) {
-    return this.tasksService.findOne(id);
+  async findOneTask(@Param('id') id: string) {
+    return this.tasksService.findOneTask(id);
   }
 
   @Patch(':id')
-  async update(@Param('id') id: string, @Body() updateTaskDto: UpdateTaskDto) {
-    return this.tasksService.update(id, updateTaskDto);
+  async updateTask(@Param('id') id: string, @Body() updateTaskDto: UpdateTaskDto) {
+    return this.tasksService.updateTask(id, updateTaskDto);
   }
 
   @Delete(':id')
-  async remove(@Param('id') id: string) {
-    return this.tasksService.remove(id);
+  async removeTask(@Param('id') id: string) {
+    return this.tasksService.removeTask(id);
   }
 
   @Patch('/complete/:id')
   async updateCompleted(@Param('id') id: string, @Body('isCompleted') isCompleted: boolean) {
     await this.tasksService.updateCompleted(id, isCompleted);
-  }
-
-  @Patch('/disabled/:id')
-  async updateDisabled(@Param('id') id: string, @Body('isDisabled') isDisabled: boolean) {
-    await this.tasksService.updateDisabled(id, isDisabled)
   }
 }
