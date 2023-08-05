@@ -17,4 +17,4 @@ import { Memos, MemoSchema } from './schemas/memo.schema';
   providers: [TasksService, MemosService],
 })
 
-export class TasksModule {}
+export class MemosModule {}

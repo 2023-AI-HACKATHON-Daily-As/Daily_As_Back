@@ -1,30 +1,54 @@
 import { Injectable } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
-import { InjectModel } from '@nestjs/mongoose';
 import { Tasks } from './schemas/task.schema';
-import { Model } from 'mongoose';
 
 @Injectable()
 export class TasksService {
-  constructor(@InjectModel(Tasks.name) private usersModel: Model<Tasks>) {}
-  create(createTaskDto: CreateTaskDto) {
-    return 'This action adds a new task';
+  constructor(
+    @InjectModel(Tasks.name) private tasksModel: Model<Tasks>,
+  ) { }
+
+  async createTask(createTaskDto: CreateTaskDto) {
+    const newTask = new this.tasksModel(createTaskDto);
+    return newTask.save();
   }
 
-  findAll() {
-    return `This action returns all tasks`;
+  async findAllTask() {
+    return this.tasksModel.find().exec();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} task`;
+  async findOneTask(id: string) {
+    return this.tasksModel.findById(id).exec();
   }
 
-  update(id: number, updateTaskDto: UpdateTaskDto) {
-    return `This action updates a #${id} task`;
+  async updateTask(id: string, updateTaskDto: UpdateTaskDto) {
+    return this.tasksModel.findByIdAndUpdate(
+      { id },
+      {
+        $set: {
+          date: updateTaskDto.date,
+          subMemo: updateTaskDto.subMemo,
+          isCompleted: updateTaskDto.isCompleted,
+        }
+      }
+    ).exec();
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} task`;
+  async removeTask(id: string) {
+    return this.tasksModel.findByIdAndRemove(id).exec();
+  }
+
+  async updateCompleted(id: string, isCompleted: boolean) {
+    return this.tasksModel.findByIdAndUpdate(
+      { id },
+      {
+        $set: {
+          isCompleted
+        }
+      }
+    ).exec();
   }
 }

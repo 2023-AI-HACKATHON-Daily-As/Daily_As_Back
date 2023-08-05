@@ -8,27 +8,32 @@ export class TasksController {
   constructor(private readonly tasksService: TasksService) {}
 
   @Post()
-  create(@Body() createTaskDto: CreateTaskDto) {
-    return this.tasksService.create(createTaskDto);
+  async create(@Body() createTaskDto: CreateTaskDto) {
+    return await this.tasksService.createTask(createTaskDto);
   }
 
   @Get()
-  findAll() {
-    return this.tasksService.findAll();
+  async findAllTask() {
+    return this.tasksService.findAllTask();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.tasksService.findOne(+id);
+  async findOneTask(@Param('id') id: string) {
+    return this.tasksService.findOneTask(id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateTaskDto: UpdateTaskDto) {
-    return this.tasksService.update(+id, updateTaskDto);
+  async updateTask(@Param('id') id: string, @Body() updateTaskDto: UpdateTaskDto) {
+    return this.tasksService.updateTask(id, updateTaskDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.tasksService.remove(+id);
+  async removeTask(@Param('id') id: string) {
+    return this.tasksService.removeTask(id);
+  }
+
+  @Patch('/complete/:id')
+  async updateCompleted(@Param('id') id: string, @Body('isCompleted') isCompleted: boolean) {
+    await this.tasksService.updateCompleted(id, isCompleted);
   }
 }
